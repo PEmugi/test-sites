@@ -2631,13 +2631,17 @@ img.ej-logo {
 /* Footer */
 
 	#footer {
-		background-attachment: scroll;
-		/*background-color: #4eb980;#32cd32*/
+		background-attachment: scroll,							fixed;
+		background-image: url("images/bottom-3200.svg"), url("images/overlay-footer.png");
+		background-position: top center,					top left;
+		background-repeat: repeat-x,						repeat;
+		background-size: 3200px 460px,					auto;
+		/*background-attachment: scroll;
 		background-color: #496064;
 		background-image: url("images/bottom-3200.svg");
 		background-position: top center;
 		background-repeat: repeat-x;
-		background-size: 3200px 460px;
+		background-size: 3200px 460px;*/
 		color: rgba(255, 255, 255, 0.8);
 		/*
 			Since the SVG background occupies a lot of vertical space, we'll
@@ -3049,8 +3053,10 @@ img.ej-logo {
 		/* Footer */
 
 			#footer {
-				background-image: url("images/bottom-1280.svg");
-				background-size: 1280px 184px;
+				background-image: url("images/bottom-1280.svg"), url("images/overlay-footer-s.png");
+				background-size: 1280px 184px,						auto,							cover;
+				/*background-image: url("images/bottom-1280.svg");
+				background-size: 1280px 184px;*/
 				margin-top: -75px;
 				padding: calc(184px + 2em) 0 2em 0;
 			}
