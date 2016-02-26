@@ -2887,8 +2887,10 @@ img.ej-logo {
 		/* Footer */
 
 			#footer {
-				background-image: url("images/bottom-1600.svg");
-				background-size: 1600px 230px;
+				background-image: url("images/bottom-1280.svg"), url("images/overlay-footer.png");
+				background-size: 1600px 230px,						auto,							cover;
+				/*background-image: url("images/bottom-1600.svg");
+				background-size: 1600px 230px;*/
 				margin-top: -100px;
 				padding: calc(230px + 4em) 0 6em 0;
 			}
