@@ -12,6 +12,10 @@ img.ej-logo {
 	width: 40%;
 }
 
+a.github-link:hover {
+	color: #30b4ca;
+}
+
 
 /*
 	Directive by HTML5 UP
