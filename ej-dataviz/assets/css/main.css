@@ -2108,7 +2108,7 @@ span.mini {
 			-webkit-transition: opacity 0.25s ease-in-out;
 			-ms-transition: opacity 0.25s ease-in-out;
 			transition: opacity 0.25s ease-in-out;
-			background-image: url("images/overlay.png");
+			/*background-image: url("images/overlay.png");*/
 			content: '';
 			display: block;
 			height: 100%;
@@ -2117,6 +2117,22 @@ span.mini {
 			position: absolute;
 			top: 0;
 			width: 100%;
+		}
+
+		.image.odp:after {
+			background-image: url("images/overlay-opendataportal.png");
+		}
+		.image.stm:after {
+			background-image: url("images/overlay-storymap.png");
+		}
+		.image.viz:after {
+			background-image: url("images/overlay-datavizjs.png");
+		}
+		.image.lft:after {
+			background-image: url("images/overlay-leaflet.png");
+		}
+		.image.kop:after {
+			background-image: url("images/overlay-koop.png");
 		}
 
 		.image img {
@@ -2581,7 +2597,7 @@ span.mini {
 			/*background: #4eb980;*/
 			background: #fff;
 			border-radius: 100%;
-			color: #32cd32;
+			color: #30b4ca;
 			cursor: default;
 			display: inline-block;
 			font-size: 2.25em;
