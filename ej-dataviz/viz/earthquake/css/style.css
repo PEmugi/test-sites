@@ -47,6 +47,7 @@ html, body {
 .navbar-header {
   width: 33.333%;
   background: #444;
+  height: 51px;
 }
 
 .navbar-header > a {
