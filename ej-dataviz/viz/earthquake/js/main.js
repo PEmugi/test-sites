@@ -47,9 +47,15 @@ require([
   ){
 
     var map, eq_depth, eq_magnitude, playInterval = 6200;
-    var now = { start: new Date("1/1/2016 UTC"), end: new Date("1/2/2016 UTC") };
+    var currentTime = new Date();
+    var today = new Date((currentTime.getMonth() + 1) + "/" + currentTime.getDate() + "/" + currentTime.getFullYear() + " UTC");
+    var y = currentTime.getFullYear();
+    var m = currentTime.getMonth() - 1;
+    var d = currentTime.getDate();
+    var now = { start: new Date(m + "/1/" + y + " UTC"), end: new Date(m + "/2/" + y + " UTC") };
     var chart, eq_allData = [], nextStartId = 0;
     var eq_queryTask = new QueryTask(appConfig.chart.dataUrl);
+    console.log(today, now.end);
 
     function initMap() {
         var deferred = arcgisUtils.createMap(appConfig.map.id, "mapView", {
@@ -148,8 +154,13 @@ require([
     }
     
     function forwardTime() {
-        now.start.setDate(now.start.getDate() + 1);
-        now.end.setDate(now.end.getDate() + 1);
+        if(now.start >= today) {
+            now = { start: new Date(m + "/1/" + y + " UTC"), end: new Date(m + "/2/" + y + " UTC") };
+        }
+        else {
+            now.start.setDate(now.start.getDate() + 1);
+            now.end.setDate(now.end.getDate() + 1);
+        }
         initTime();
     }
 
