@@ -54,7 +54,9 @@ require([
         }).then(function(response) {
             map = response.map;
             map.disableMapNavigation(); // 地図操作無効化
-            //console.log(map);
+            console.log(map);
+            
+            dom.byId("title").innerHTML = response.itemInfo.item.title;
             
             //initTime();
             getEQAllData();
