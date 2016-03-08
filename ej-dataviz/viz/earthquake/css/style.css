@@ -44,6 +44,10 @@ html, body {
   /*margin-left: 25px;*/
 }
 
+.navbar-brand {
+    font-weight: bold;
+}
+
 .navbar-header {
   width: 33.333%;
   background: #444;
