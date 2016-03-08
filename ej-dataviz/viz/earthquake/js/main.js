@@ -12,6 +12,9 @@ require([
     "app/d3ScatterPlot",
     "esri/tasks/query",
     "esri/tasks/QueryTask",
+    
+    // Legend
+    "esri/dijit/Legend",
 
     // Dojo Utils
     "dojo/dom-style", 
@@ -32,6 +35,8 @@ require([
     Chart,
     Query,
     QueryTask,
+    
+    Legend,
 
 	domStyle, 
 	domAttr, 
@@ -57,6 +62,11 @@ require([
             console.log(map);
             
             dom.byId("title").innerHTML = response.itemInfo.item.title;
+            
+            var legend = new Legend({
+				map: map
+			}, "mapLegendView");
+			legend.startup();
             
             //initTime();
             getEQAllData();
