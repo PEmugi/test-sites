@@ -47,7 +47,7 @@ define([
             var data = this.data;
             var layer = this.layer;
             
-            var margin = {top: 20, right: 40, bottom: 30, left: 50},
+            var margin = {top: 20, right: 40, bottom: 60, left: 50},
                 width = window.innerWidth - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom;
 

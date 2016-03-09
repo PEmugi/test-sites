@@ -11,6 +11,19 @@
     display: none;
 }
 
+#dateView {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    z-index: 999;
+}
+
+#now {
+    font-size: 4.5em;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    color: rgba(255, 85, 0, 0.4);
+}
+
 img.layerTile {
   animation-duration: 1s;
   animation-name: fadein;

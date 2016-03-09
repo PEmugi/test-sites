@@ -139,7 +139,7 @@ require([
     }
     
     function initTime() {
-        dom.byId("now").innerHTML = "<b>" + now.start.getFullYear() + "年 " + (now.start.getMonth() + 1) + "月 " + now.start.getDate() + "日</b>";
+        dom.byId("now").innerHTML = "<b>" + now.start.getFullYear() + "/" + (now.start.getMonth() + 1) + "/" + now.start.getDate() + "</b>";
         var timeExtent = new TimeExtent();
         timeExtent.startTime = now.start;
         timeExtent.endTime = now.end;
