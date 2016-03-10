@@ -57,6 +57,7 @@ require([
     var eq_queryTask = new QueryTask(appConfig.chart.dataUrl);
     console.log(today, now.end);
 
+    // マップ作成
     function initMap() {
         var deferred = arcgisUtils.createMap(appConfig.map.id, "mapView", {
             mapOptions: {
@@ -86,6 +87,7 @@ require([
         });
     }
     
+    // チャート作成
     function initChart(data) {
         chart = new Chart({
             map: map,
@@ -97,10 +99,12 @@ require([
         }, 6200);
     }
     
+    // チャートハイライトレンジ
     function updateChart() {
         chart.setHighlightSpan(now.start, now.end);
     }
     
+    // 地震全データ取得クエリ（チャート用）
     function getEQAllData(startId) {
         var query = new Query();
         query.outFields = ["OBJECTID", "MAGNITUDE", "DEPTH", "UTC_DATETIME"];
@@ -116,6 +120,7 @@ require([
         eq_queryTask.execute(query, successGetEQAllData, errorGetEQAllData);
     }
     
+    // 地震全データ取得コールバック（チャート用）
     function successGetEQAllData(e) {
         console.log("successGetEQAllData", e);
         arrayUtils.forEach(e.features, function(f) {
@@ -134,10 +139,12 @@ require([
         }
     }
     
+    // 地震全データ取得エラー（チャート用）
     function errorGetEQAllData() {
         console.log("errorGetEQAllData");
     }
     
+    // 時間の初期化（更新）
     function initTime() {
         dom.byId("now").innerHTML = "<b>" + now.start.getFullYear() + "/" + (now.start.getMonth() + 1) + "/" + now.start.getDate() + "</b>";
         var timeExtent = new TimeExtent();
@@ -153,6 +160,7 @@ require([
         }, playInterval);
     }
     
+    // １日進める OR 初期に戻る
     function forwardTime() {
         if(now.start >= today) {
             now = { start: new Date(m + "/1/" + y + " UTC"), end: new Date(m + "/2/" + y + " UTC") };
@@ -164,6 +172,7 @@ require([
         initTime();
     }
 
+    // 地震レイヤーの描画エフェクト
     function eq_magnitude_draw(e) {
         //console.log(e.node);
         //console.log(e.graphic._shape.shape.r);
@@ -174,10 +183,12 @@ require([
             .attr("r", e.graphic._shape.shape.r);
     }
     
+    // 
     function eq_magnitude_hover(e) {
         
     }
     
+    // 
     function eq_magnitude_mouseout(e) {
         
     }

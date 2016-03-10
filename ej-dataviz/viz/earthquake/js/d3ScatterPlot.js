@@ -41,9 +41,8 @@ define([
 			this._initChart();
 		},
 
-		_initChart: function() {
-            console.log(this.data);
-            console.log(this.domId);
+		// チャート作成
+        _initChart: function() {
             var data = this.data;
             var layer = this.layer;
             
@@ -54,25 +53,17 @@ define([
             var margin = {top: 20, right: 40, bottom: 60, left: 50},
                 width = window.innerWidth - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom;
-
             var x = d3.time.scale()
                 .range([0, width]);
-            /*var x = d3.scale.linear()
-                .range([1451613639000, 1457413398000]);*/
-
             var y = d3.scale.linear()
                 .range([height, 0]);
-
             var color = d3.scale.category10();
-
             var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom");
-
             var yAxis = d3.svg.axis()
                 .scale(y)
                 .orient("left");
-
             var svg = d3.select("#" + this.domId).append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -87,6 +78,7 @@ define([
             x.domain(d3.extent(data, function(d) { return d.UTC_DATETIME; })).nice();
             y.domain(d3.extent(data, function(d) { return d.MAGNITUDE; })).nice();
 
+            // X軸
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -100,6 +92,7 @@ define([
                 .style("fill", "#9d9d9d")
                 .text("Date");
 
+            // Y軸
             svg.append("g")
                 .attr("class", "y axis")
                 .style("fill", "#9d9d9d")
@@ -113,6 +106,7 @@ define([
                 .style("fill", "#9d9d9d")
                 .text("Magnitude");
 
+            // プロット（ドット）
             svg.selectAll(".dot")
                 .data(data)
                 .enter().append("circle")
@@ -120,12 +114,8 @@ define([
                 .attr("r", function(d) { return d.MAGNITUDE; })
                 .attr("cx", function(d) { return x(d.UTC_DATETIME); })
                 .attr("cy", function(d) { return y(d.MAGNITUDE); })
-                //.style("fill", function(d) { return color(d.MAGNITUDE); });
-                //.style("fill-opacity", 0)
-                //.style("stroke", "rgb(255, 85, 0)");
-                //.style("fill", "#9d9d9d")
                 .on("mouseover", lang.hitch(function(d) {
-                    console.log(window.innerWidth - d3.event.pageX);
+                    // ツールチップ
                     var xoffset;
                     if((window.innerWidth - d3.event.pageX) > 240) {
                         xoffset = 15;
@@ -140,7 +130,8 @@ define([
                                 "マグニチュード: " + d.MAGNITUDE)
                         .style("left", (d3.event.pageX + xoffset) + "px")
                         .style("top", (d3.event.pageY - 40) + "px");
-                        
+                    
+                    // マップ連動（ハイライト）
                     arrayUtils.forEach(layer.graphics, function(g) {
                         if(d.OBJECTID === g.attributes.OBJECTID) {
                             //console.log(g);
@@ -150,34 +141,18 @@ define([
                     });
                 }))
                 .on("mouseout", function() {
+                    // ツールチップ消去
                     tooltip.transition()
                         .duration(400)
                         .style("opacity", 0);
+                    // マップ連動（ハイライト消去）
                     d3.selectAll(".active-feature").attr("class", "");
                 });
-
-            /*var legend = svg.selectAll(".legend")
-                .data(color.domain())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-            legend.append("rect")
-                .attr("x", width - 18)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", color);
-
-            legend.append("text")
-                .attr("x", width - 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .text(function(d) { return d; });*/
                 
             this.svg = svg;
 		},
         
+        // レンジハイライト
         setHighlightSpan: function(start, end) {
             this.svg.selectAll(".active-dot")
                 .attr("class", "dot");
