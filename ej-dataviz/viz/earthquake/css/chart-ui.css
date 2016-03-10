@@ -11,6 +11,20 @@
   shape-rendering: crispEdges;
 }
 
+.tooltip {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  pointer-events: none;
+  background: #444;
+  color: rgb(255, 85, 0);
+  padding: 10px 15px 10px 15px;
+  font-weight: bold;
+  font-size: 0.8em;
+  font-family: "Meiryo";
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
 circle.dot {
     cursor: pointer;
     fill: #000;

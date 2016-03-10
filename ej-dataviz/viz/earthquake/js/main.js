@@ -67,7 +67,7 @@ require([
             map.disableMapNavigation(); // 地図操作無効化
             console.log(map);
             
-            dom.byId("title").innerHTML = response.itemInfo.item.title;
+            dom.byId("viz-title").innerHTML = response.itemInfo.item.title;
             
             var legend = new Legend({
 				map: map

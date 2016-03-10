@@ -48,6 +48,16 @@ html, body {
     font-weight: bold;
 }
 
+.navbar-brand > i {
+    margin-left: 10px;
+    transition: all .3s;
+}
+
+.navbar-brand:hover > i {
+    color: #00ffff;
+    transform: scale(1.2);
+}
+
 .navbar-header {
   width: 33.333%;
   background: #444;

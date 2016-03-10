@@ -47,6 +47,10 @@ define([
             var data = this.data;
             var layer = this.layer;
             
+            var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+            
             var margin = {top: 20, right: 40, bottom: 60, left: 50},
                 width = window.innerWidth - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom;
@@ -120,16 +124,35 @@ define([
                 //.style("fill-opacity", 0)
                 //.style("stroke", "rgb(255, 85, 0)");
                 //.style("fill", "#9d9d9d")
-                .on("mouseover", lang.hitch(function(e) {
+                .on("mouseover", lang.hitch(function(d) {
+                    console.log(window.innerWidth - d3.event.pageX);
+                    var xoffset;
+                    if((window.innerWidth - d3.event.pageX) > 240) {
+                        xoffset = 15;
+                    }
+                    else {
+                        xoffset = -165;
+                    }
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html(new Date(d.UTC_DATETIME).getFullYear() + "/" + (new Date(d.UTC_DATETIME).getMonth() + 1) + "/" + new Date(d.UTC_DATETIME).getDate() + "<br/>" + 
+                                "マグニチュード: " + d.MAGNITUDE)
+                        .style("left", (d3.event.pageX + xoffset) + "px")
+                        .style("top", (d3.event.pageY - 40) + "px");
+                        
                     arrayUtils.forEach(layer.graphics, function(g) {
-                        if(e.OBJECTID === g.attributes.OBJECTID) {
-                            console.log(g);
-                            console.log(g.getNode());
+                        if(d.OBJECTID === g.attributes.OBJECTID) {
+                            //console.log(g);
+                            //console.log(g.getNode());
                             d3.select(g.getNode()).attr("class", "active-feature");
                         }
                     });
                 }))
                 .on("mouseout", function() {
+                    tooltip.transition()
+                        .duration(400)
+                        .style("opacity", 0);
                     d3.selectAll(".active-feature").attr("class", "");
                 });
 
