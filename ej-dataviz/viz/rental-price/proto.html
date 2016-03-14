@@ -103,6 +103,7 @@
         "esri/renderers/ClassBreaksRenderer",
         "esri/Color", "dojo/dom-style", 
         "dojo/dom", "dojo/on",
+        "dojo/parser",
         "dijit/form/TextBox", "dijit/form/Button",
         "dojo/domReady!"
       ], function(
@@ -114,8 +115,11 @@
         SimpleLineSymbol,
         ClassBreaksRenderer,
         Color, domStyle,
-        dom, on
+        dom, on,
+        parser
       ) {
+        parser.parse();
+          
         var map, layer, legend;
         var myincome = dom.byId("form-income").value;
         
@@ -210,7 +214,7 @@
     <div id="mapView"></div>
     <div id="mapLegendView"></div>
     <label>あなたの年収は</label> <input id="form-income" value="500" data-dojo-type="dijit/form/TextBox" />
-    <button id="btn" type="button">GO</button>
+    <button id="btn" type="button" data-dojo-type="dijit/form/Button">GO</button>
   </body>
 
 </html>
