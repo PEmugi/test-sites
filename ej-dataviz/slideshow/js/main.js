@@ -15,7 +15,7 @@ require([
     "dojo/dom-construct",
     "dojo/query",
     
-    "js/DataVizQuery.js",
+    "js/DatavizQuery.js",
 
     "dojo/domReady!"
 ], function (
