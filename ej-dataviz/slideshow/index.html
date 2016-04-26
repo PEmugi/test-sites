@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Esri Japan Open Data Visualization</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.ico">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="http://js.arcgis.com/3.15/esri/css/esri.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+        var dojoConfig = {
+            packages: [{
+                 name: "config",
+                 location: package_path + '/config'
+            }]
+        };
+    </script>
+
+    <!-- jQuery -->
+    <script src="lib/jquery.js"></script>
+
+    <!-- Bootstrap 3.3.5 -->
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Chart -->
+    <!--<script src="lib/chartjs/Chart.min.js"></script>-->
+
+    <!-- cedar -->
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script type="text/javascript" src="http://vega.github.io/vega/vega.min.js"></script>
+    <script type="text/javascript" src="//esri.github.io/cedar/js/cedar.js"></script>-->
+
+    <!-- arcgis api for javascript --> 
+    <script src="http://js.arcgis.com/3.15/"></script>
+
+    <!-- App -->
+    <script src="js/main.js"></script>
+        
+  </head>
+
+  <body>
+
+        <div class="row row-map">
+            <div class="col-xs-12 col-sm-12 no-col-padding" id="infoContainer">
+                <h2 id="mapTitle"></h2>
+                <p id="mapSnippet"></p>
+            </div>
+            <div class="col-xs-12 col-sm-12 no-col-padding" id="mapContainer">
+            </div>
+        </div>
+        
+        <div class="row row-thumbnails">
+            <div class="col-xs-12 no-col-padding" id="thumbnailContainer">
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Data Visualization Slideshow</h3>
+                </div>
+                <div class="modal-body">
+                    <p><a href="https://www.arcgis.com/home/" target="_brank">ArcGIS Online</a> を使って公開したデータ ビジュアライゼーション マップをスライドショー形式でご覧いただけます。<br>※<b>DataViz（仮）</b> という名前のタグをつけて公開すると自動的にスライドショーに反映されます。</p>
+                    <img src="img/add-tag.png" width="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                </div>
+                </div>
+            </div>
+        </div>   
+
+  </body>
+</html>

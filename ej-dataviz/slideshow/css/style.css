@@ -1,0 +1,78 @@
+html, body {
+    width: 100%;
+    font-family: "Meiryo";
+}
+
+#mapContainer {
+	margin: 0;
+	padding: 0;
+    height: 400px;
+}
+
+#infoContainer {
+    text-align: center;
+    padding: 25px;
+}
+
+#thumbnailContainer {
+    
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.row-map {
+    
+}
+
+.row-thumbnails {
+    margin-top: 25px;
+}
+
+.row-thumbnails > div {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.thumbnail-flame {
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform, opacity 0.5s;
+    opacity: 0.7;
+}
+
+.thumbnail-flame:hover {
+    /*z-index: 999;*/
+}
+
+.map-thumbnail {
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.map-thumbnail:hover {
+    /*opacity: 0.5;*/
+    transform: scale(1.1);
+}
+
+.map-title {
+    position: absolute;
+    transition: all 0.5s;
+}
+
+#mapView {
+    transition: all 1s;
+}
+
+.tooltip {
+    font-family: "Meiryo";
+}
+
+/*.avator-img {
+    border: 4px #fff solid;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+}*/
