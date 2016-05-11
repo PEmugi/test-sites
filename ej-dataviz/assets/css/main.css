@@ -2545,7 +2545,7 @@ a.github-link:hover {
 
 	#header {
 		background-attachment: scroll,							fixed,					fixed;
-		background-image: url("images/top-3200.svg"), url("images/overlay.png"), url("../../images/header.jpg");
+		background-image: url("images/top-3200.svg"), url("images/overlay.jpg"), url("../../images/header.jpg");
 		background-position: bottom center,					top left,				center center;
 		background-repeat: repeat-x,						repeat,					no-repeat;
 		background-size: 3200px 460px,					auto,					cover;
@@ -2605,7 +2605,7 @@ a.github-link:hover {
 			/*background: #4eb980;*/
 			background: #fff;
 			border-radius: 100%;
-			color: #30b4ca;
+			color: #544d55;
 			cursor: default;
 			display: inline-block;
 			font-size: 2.25em;
@@ -2867,7 +2867,7 @@ a.github-link:hover {
 
 			#header {
 				background-attachment: scroll,							fixed,							scroll;
-				background-image: url("images/top-1600.svg"), url("images/overlay.png"), url("../../images/header.jpg");
+				background-image: url("images/top-1600.svg"), url("images/overlay.jpg"), url("../../images/header.jpg");
 				background-size: 1600px 230px,					auto,							cover;
 				padding: 6em 0 12em 0;
 			}
@@ -3031,7 +3031,7 @@ a.github-link:hover {
 		/* Header */
 
 			#header {
-				background-image: url("images/top-1280.svg"), url("images/overlay.png"), url("../../images/header.jpg");
+				background-image: url("images/top-1280.svg"), url("images/overlay.jpg"), url("../../images/header.jpg");
 				background-size: 1280px 184px,						auto,							cover;
 				padding: 3em 0 7em 0;
 			}
