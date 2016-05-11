@@ -2136,8 +2136,8 @@ a.github-link:hover {
 		.image.viz:after {
 			background-image: url("images/overlay-datavizjs.png");
 		}
-		.image.lft:after {
-			background-image: url("images/overlay-leaflet.png");
+		.image.ad3:after {
+			background-image: url("images/overlay-arcgisd3.png");
 		}
 		.image.kop:after {
 			background-image: url("images/overlay-koop.png");
