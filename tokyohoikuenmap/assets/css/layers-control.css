@@ -71,6 +71,10 @@
     display: block;
 }
 
+.leaflet-retina .leaflet-control-layers-toggle {
+    background: #f5646a;
+}
+
 /*.leaflet-control-layers {
     transition: all 1s;
 }
