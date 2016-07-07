@@ -39,42 +39,23 @@
         }
 
         /* label.css */
-        .point-label {
-            font-size: 1em;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            margin-top: -2em;
-            margin-left: -2em;
-            white-space: nowrap;
-            font-family: "Meiryo", Helvetica, Arial, sans-serif;
-            font-size: 1em;
-        }
-        .path-label {
-            font-size: .8em;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            margin-top: -1em;
-            white-space: nowrap;
-            font-family: "Meiryo", Helvetica, Arial, sans-serif;
-            font-size: 1.2em;
-            color: #006380;
-        }
-        .point-label div {
-            animation: label-fade 3s 1;
-            -webkit-animation: label-fade 3s 1;
-            position: relative;
-            left: -50%;
-            text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
-        }
-        .path-label div {
-            animation: label-fade 3s 1;
-            -webkit-animation: label-fade 3s 1;
-            position: relative;
-            left: -50%;
-            text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
-        }
+	    .esri-leaflet-webmap-labels {
+	      font-size: 1em;
+	      font-weight: bold;
+	      text-transform: uppercase;
+	      text-align: center;
+	      white-space: nowrap;
+	    }
+	    .esri-leaflet-webmap-labels div {
+	      position: relative;
+	      left: -50%;
+	      text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
+          animation: label-fade 4s 1;
+          -webkit-animation: label-fade 4s 1;
+          position: relative;
+          left: -50%;
+          text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
+	    }
         @keyframes label-fade {
           0% {
             opacity: 0;
@@ -168,9 +149,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
 
-    <!-- Load Leaflet Label from GitHub -->
-    <script src="https://leaflet.github.io/Leaflet.label/leaflet.label.js"></script>
-
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"></script>
 
@@ -179,6 +157,9 @@
 
 	<!-- Load Heatmap Feature Layer from CDN -->
 	<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/2.0.0-beta.1/esri-leaflet-heatmap-feature-layer.js"></script>
+
+    <!-- Load Esri Leaflet Renderers from CDN -->
+    <script src="//cdn.jsdelivr.net/leaflet.esri.renderers/2.0.3/esri-leaflet-renderers.js"></script>
 
     <!-- Load Vector Icon from GitHub -->
     <script src="https://muxlab.github.io/Leaflet.VectorIcon/L.VectorIcon.js"></script>
@@ -189,7 +170,7 @@
 
 
     <!-- Load L.esri.WebMap -->
-	<script src="https://ynunokawa.github.io/L.esri.WebMap/src/L.esri.WebMap.js"></script>
+	<script src="https://cdn.rawgit.com/ynunokawa/L.esri.WebMap/v0.3.3/dist/esri-leaflet-webmap.js"></script>
 
     <link rel="stylesheet" href="assets/css/zoom-control.css" />
     <link rel="stylesheet" href="assets/css/popup.css" />
