@@ -1,8 +1,9 @@
 var visibleHoikuen = [];
-var webmap, capacityLayer, tokyo23Layer;
+var webmap, map, capacityLayer, tokyo23Layer, basemapLayer;
 
+// URL パラメーターから選択した区名の取得
 function getAreaName() {
-    var initAreaName = '練馬区';
+    var initAreaName = appConfig.defaultAreaName;
     var urlParams = location.search.substring(1).split('&');
     for(var i=0; urlParams[i]; i++) {
         var param = urlParams[i].split('=');
@@ -12,50 +13,54 @@ function getAreaName() {
     }
     return initAreaName;
 }
+
+// 選択した区の範囲を取得・ズーム
 function getAreaBounds(e) {
     //console.log(e.feature);
     if(e.feature.properties['CSS_NAME'] === visibleHoikuen[0]) {
         L.geoJson(e.feature, {
             onEachFeature: function(geojson, l) {
-                webmap._map.fitBounds(l.getBounds());
+                map.fitBounds(l.getBounds());
             }
         });
     }
 }
 
+// Web マップの初期化
 function initWebmap() {
-    webmap = L.esri.webMap('fb531718fd8d46dca745625d16954f1b', { map: L.map('map') });
+    webmap = L.esri.webMap(appConfig.webmapId, { map: L.map('map', {zoomControl: false}) }); // A leaflet plugin to display ArcGIS Web Map: https://github.com/ynunokawa/L.esri.WebMap
     webmap.on('load', webmapLoaded);
     webmap.on('metadataLoad', metadataLoaded);
 }
+
+// Web マップ読み込み後に実行（各コントロールの初期化）
 function webmapLoaded() {
-    initHomeControl();
+    map = webmap._map;
+    basemapLayer = webmap.layers[0].layer;
+
+    initZoomControl();
     initGeocoder();
-    initBasemapControl();
     initLayerControl();
-    //getAreaBounds();
+
+    map.on('overlayadd', addVisibleHoikuen);
+    map.on('overlayremove', removeVisibleHoikuen);
 }
+
+// Web マップ メタデータ読み込み後に実行
 function metadataLoaded() {
     console.log(webmap.portalItem);
 }
 
-function initHomeControl() {
-    var HomeControl = L.Control.extend({
-        options: {
-            position: 'bottomleft'
-        },
-        onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'home-control');
-            container.innerHTML = '<h5><a href="home.html">ホームへ戻る</a></h5>';
-            return container;
-        }
-    });
-    webmap._map.addControl(new HomeControl());
+function initZoomControl() {
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
 }
 
+// 住所検索コントロールの初期化
 function initGeocoder() {
   var providers = [];
-  var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
+  var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider(); // ArcGIS 住所検索サービス
   /*var hoikuen = L.esri.Geocoding.featureLayerProvider({
     url: 'http://services3.arcgis.com/iH4Iz7CEdh5xTJYb/arcgis/rest/services/CITY/FeatureServer/0',
     searchFields: ['施設名'],
@@ -67,54 +72,43 @@ function initGeocoder() {
   providers.push(arcgisOnline);
   //providers.push(hoikuen);
 
+  // 住所検索コントロール
   var searchControl = L.esri.Geocoding.geosearch({
+    position: 'bottomleft',
     providers: providers,
     placeholder: '住所/地名を入力'
-  }).addTo(webmap._map);
+  }).addTo(map);
 
-  var results = L.layerGroup().addTo(webmap._map);
+  var results = L.layerGroup().addTo(map);
 
+  // 結果取得イベントリスナ―
   searchControl.on('results', function(data){
     console.log(data.results);
     results.clearLayers();
     var resultIcon = L.vectorIcon({
         className: 'geocoder-result-icon',
-        svgHeight: 26,
-        svgWidth: 26,
+        svgHeight: 14,
+        svgWidth: 14,
         type: 'circle',
         shape: {
-            r: '12',
-            cx: '13',
-            cy: '13'
+            r: '6',
+            cx: '7',
+            cy: '7'
         },
         style: {
-            fill: 'rgba(51,204,255,0.7)',
+            fill: 'rgba(255,102,0,0.8)',
             stroke: '#fff',
             strokeWidth: 0
         }
     });
+    // 検索結果のハイライト・ポップアップ表示
     var result = L.marker(data.results[0].latlng, { icon: resultIcon }).bindPopup('<div class="leaflet-popup-content-title"><h4>' + data.results[0].text + '</h4></div>');
     results.addLayer(result);
     result.openPopup();
   });
 }
 
-function initBasemapControl() {
-    var basemaps = {};
-    basemaps[webmap.layers[0].title] = webmap.layers[0].layer;
-    basemaps['地理院地図'] = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-        attribution: "<a href='http://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
-    });
-    basemaps['Esri 地形図'] = L.esri.basemapLayer("Topographic");
-    basemaps['Esri 衛星画像'] = L.esri.basemapLayer("Imagery");
-    
-    var basemapControl = L.control.layers(basemaps, {}, {
-        position: 'topright'
-    });
-    basemapControl.addTo(webmap._map);
-    basemapControl._layersLink.innerHTML = '<div>背景</div>';
-}
-
+// 保育園レイヤー コントロールの初期化
 function initLayerControl() {
     var overlayMaps = {};
     var overlayHoikuenMaps = {};
@@ -124,9 +118,8 @@ function initLayerControl() {
             if(l.title.match(/区$/) !== null) {
                 overlayHoikuenMaps[l.title] = l.layer;
                 if(l.title === visibleHoikuen[0]) {
-                    webmap._map.addLayer(l.layer);
+                    map.addLayer(l.layer);
                 }
-                l.layer.on('addfeature', setCapacitiesZIndex); // 必須ではないので描画パフォーマンスと相談
             }
             else {
                 overlayMaps[l.title] = l.layer;
@@ -144,40 +137,31 @@ function initLayerControl() {
             }
         }
     });
-    var layerControl = L.control.layers({}, overlayMaps, {
-        position: 'topright',
-        autoZIndex: false
-    });
-    var hoikuenLayerControl = L.control.layers({}, overlayHoikuenMaps, {
+    // 23区別保育園レイヤー コントロール
+    /*var hoikuenLayerControl = L.control.layers({}, overlayHoikuenMaps, {
         position: 'topright',
         autoZIndex: false
     });
     hoikuenLayerControl.addTo(webmap._map);
-    layerControl.addTo(webmap._map);
-    console.log(layerControl);
-    layerControl._layersLink.innerHTML = '<div>その他</div>';
-    hoikuenLayerControl._layersLink.innerHTML = '<div>保育園</div>';
-    webmap._map.on('overlayadd', addVisibleHoikuen);
-    webmap._map.on('overlayremove', removeVisibleHoikuen);
+    hoikuenLayerControl._layersLink.innerHTML = '<div>保育園</div>';*/
 
     setWhereCapacityLayer();
-    //setCapacitiesZIndex();
-    //capacityLayer.addTo(webmap._map);
 }
 
+// 保育園（定員）レイヤーの属性フィルタリング
 function setWhereCapacityLayer() {
     var where = arrayToWhere(visibleHoikuen);
     console.log(capacityLayer._layers);
     console.log(where);
     for(key in capacityLayer._layers){
         if(capacityLayer._layers[key]._cache !== undefined) {
-            capacityLayer._layers[key].setWhere(where, function(response) {
-                console.log(response);
-            }, function(error) { console.log(error); });
+            console.log(key);
+            capacityLayer._layers[key].setWhere(where);
         }
     }
-    setCapacitiesZIndex();
 }
+
+// 保育園（定員）レイヤーの属性フィルタリング用 WHERE 句の生成
 function arrayToWhere(arr) {
     var where = '';
     if(arr.length === 0) {
@@ -201,17 +185,21 @@ function arrayToWhere(arr) {
     return where;
 }
 
+// レイヤーの表示イベントリスナ―
 function addVisibleHoikuen(e) {
     console.log(e);
+    // 保育園レイヤー判定
     if(e.name.match(/区$/) !== null) {
         visibleHoikuen.push(e.name);
         console.log(visibleHoikuen);
         setWhereCapacityLayer();
     }
-    setCapacitiesZIndex(); // 必須ではないので描画パフォーマンスと相談
 }
+
+// レイヤーの非表示イベントリスナ―
 function removeVisibleHoikuen(e) {
     console.log(e);
+    // 保育園レイヤー判定
     if(e.name.match(/区$/) !== null) {
         visibleHoikuen.map(function(v, i) {
             if(v === e.name) {
@@ -221,20 +209,6 @@ function removeVisibleHoikuen(e) {
         console.log(visibleHoikuen);
         setWhereCapacityLayer();
     }
-}
-
-function setCapacitiesZIndex() {
-    setTimeout(function() {
-        console.log('setZIndex!!!');
-        for(key in capacityLayer._layers){
-            if(capacityLayer._layers[key]._cache !== undefined) {
-                capacityLayer._layers[key].eachFeature(function(l) {
-                    //console.log(l);
-                    l.setZIndexOffset(-99999);
-                });
-            }
-        }
-    }, 1000);
 }
 
 visibleHoikuen.push(getAreaName());
