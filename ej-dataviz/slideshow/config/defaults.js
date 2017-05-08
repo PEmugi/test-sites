@@ -3,7 +3,7 @@ define({
         "id": "d554927c36d744b79e462d3bf28f333e"
     },
     "oauth": {
-        "appid": "K5uZp2M1665nn89t"
+        "appid": "kfKlriv60S6wQokK"
     },
     "group": "",
     "searchType": "Web Map",
@@ -15,5 +15,5 @@ define({
     "galleryItemsPerPage": 50,
     "defaultLayout": "list",
     "searchAccess": "",
-    "keywords": "opendataviz"
+    "keywords": "opendataviz2017"
 });
