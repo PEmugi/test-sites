@@ -15,5 +15,5 @@ define({
     "galleryItemsPerPage": 50,
     "defaultLayout": "list",
     "searchAccess": "",
-    "keywords": "opendataviz2017"
+    "keywords": "opendataviz"
 });
